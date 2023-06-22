@@ -19,14 +19,16 @@ app.get("/", (req, res) => {
 
 app.get("/download", async (req, res) => {
   try {
-    const allowedItags = [132, 133, 134, 135, 136, 137];
+    const videoItags = [160, 132, 133, 134, 135, 136, 137];
     const url = req.query.url;
     const info = await ytdl.getInfo(url);
-    const formats = ytdl
+    const videoFormats = ytdl
       .filterFormats(info.formats, "videoonly")
-      .filter((format) => allowedItags.includes(format.itag));
+      .filter((format) => videoItags.includes(format.itag));
 
-    res.render("download", { url, formats, error: null });
+    const audioFormats = ytdl.filterFormats(info.formats, "audioonly");
+
+    res.render("download", { url, videoFormats, audioFormats, error: null });
   } catch (error) {
     res.render("index", { error: "Invalid YouTube URL" });
   }
@@ -38,8 +40,9 @@ app.get("/download/video", async (req, res) => {
   const info = await ytdl.getBasicInfo(url);
   res.header(
     "Content-Disposition",
-    `attachment; filename="${info.videoDetails.title}_${quality}"`
+    `attachment; filename="${info.videoDetails.title}_${quality}.mp4"`
   );
+  res.header("Content-Type", "video/mp4");
 
   const videoStream = ytdl(url, { quality, format: "mp4" });
   const audioStream = ytdl(url, { quality: "highestaudio" });
@@ -102,6 +105,20 @@ app.get("/download/video", async (req, res) => {
   videoStream.pipe(ffmpegProcess.stdio[4]);
 
   ffmpegProcess.stdio[5].pipe(res);
+});
+
+app.get("/download/audio", async (req, res) => {
+  const { url, quality } = req.query;
+
+  const info = await ytdl.getBasicInfo(url);
+
+  res.header(
+    "Content-Disposition",
+    `attachment; filename="${info.videoDetails.title}_${quality}.mp3"`
+  );
+  res.header("Content-Type", "audio/mp3");
+
+  ytdl(url, { quality, format: "mp3" }).pipe(res);
 });
 
 const port = process.env.PORT;

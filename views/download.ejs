@@ -4,28 +4,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Download Video</title>
+  <title>Download YouTube Video/Audio</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Download Video</h1>
-    <% if (formats.length === 0) { %>
-    <p class="no-formats">No formats available</p>
-    <% } else { %>
-    <ul>
-      <% formats.forEach(format => { %>
-      <li>
+  <main>
+  <section id="container">
+    <h2>Download Video</h2>
+    <div class="flex">
+      <% if (videoFormats.length === 0) { %>
+      <p class="no-formats">No formats available</p>
+      <% } else { %>
+      <% videoFormats.forEach(format => { %>
+      <div class="flex-item">
         <a href="/download/video?url=<%= url %>&quality=<%= format.itag %>">
-          <span class="quality"><%= format.qualityLabel %></span>
-            <span class="size"><%= format.contentLength ? (format.contentLength / 1048576).toFixed(2) + ' MB' : '' %></span>
-       </a>
-       </li>
+          <h4 class="header"><%= format.qualityLabel %></h4>
+          <p class="text"><%= format.contentLength ? (format.contentLength / 1048576).toFixed(2) + ' MB' : '' %></p>
+        </a>
+      </div>
       <% }) %>
-    </ul>
-    <% } %>
-  </div>
+      <% } %>
+    </div>
+  </section>
+  <hr>
+  <section id="container">
+    <h2>Download Audio</h2>
+    <div class="flex">
+      <% if (audioFormats.length === 0) { %>
+      <p class="no-formats">No formats available</p>
+      <% } else { %>
+      <% audioFormats.forEach(format => { %>
+      <div class="flex-item">
+        <a href="/download/audio?url=<%= url %>&quality=<%= format.itag %>">
+          <h4 class="header"><%= format.audioBitrate %></h4>
+          <p class="text"><%= format.contentLength ? (format.contentLength / 1048576).toFixed(2) + ' MB' : '' %></p>
+        </a>
+      </div>
+      <% }) %>
+      <% } %>
+    </div>
+  </section>
+ </main>
 </body>
 
 </html>

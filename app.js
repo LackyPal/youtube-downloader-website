@@ -11,6 +11,15 @@ app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 app.use(express.static(__dirname + "/public"));
 
+// set up rate limiter: maximum of ten requests per minute
+const RateLimit = require("express-rate-limit");
+const limiter = RateLimit({
+  windowMs: 1*60*1000, // 1 minute
+  max: 10
+});
+// apply rate limiter to all requests
+app.use(limiter);
+
 // Routes
 app.get("/", (req, res) => {
   res.render("index", { error: null });

@@ -4,7 +4,6 @@ const ytdl = require("ytdl-core");
 
 const ffmpegPath = require("ffmpeg-static");
 const cp = require("child_process");
-const stream = require("stream");
 
 // Set up the template engine
 app.set("view engine", "ejs");
@@ -21,14 +20,33 @@ app.get("/download", async (req, res) => {
   try {
     const videoItags = [160, 132, 133, 134, 135, 136, 137];
     const url = req.query.url;
+
     const info = await ytdl.getInfo(url);
+
+    const title = info.videoDetails.title;
+    const thumbnail = info.videoDetails.thumbnail.thumbnails.reduce(
+      (prev, curr) => {
+        return curr.width > prev.width ? curr : prev;
+      }
+    );
+    const channel = info.videoDetails.ownerChannelName;
+    const duration = info.videoDetails.lengthSeconds;
+
+    const urlInfo = { title, thumbnail, channel, duration };
+
     const videoFormats = ytdl
       .filterFormats(info.formats, "videoonly")
       .filter((format) => videoItags.includes(format.itag));
 
     const audioFormats = ytdl.filterFormats(info.formats, "audioonly");
 
-    res.render("download", { url, videoFormats, audioFormats, error: null });
+    res.render("download", {
+      url,
+      urlInfo,
+      videoFormats,
+      audioFormats,
+      error: null,
+    });
   } catch (error) {
     res.render("index", { error: "Invalid YouTube URL" });
   }
@@ -52,39 +70,33 @@ app.get("/download/video", async (req, res) => {
     ffmpegPath,
     [
       // supress non-crucial messages
-
       "-loglevel",
       "8",
       "-hide_banner",
 
       // input audio and video by pipe
-
       "-i",
       "pipe:3",
       "-i",
       "pipe:4",
 
       // map audio and video correspondingly
-
       "-map",
       "0:a",
       "-map",
       "1:v",
 
       // no need to change the codec
-
       "-c",
       "copy",
 
       // output mp4 and pipe
-
       "-f",
       "matroska",
       "pipe:5",
     ],
     {
       // no popup window for Windows users
-
       windowsHide: true,
 
       stdio: [
@@ -93,7 +105,6 @@ app.get("/download/video", async (req, res) => {
         "inherit",
 
         // and pipe audio, video, output
-
         "pipe",
         "pipe",
         "pipe",
@@ -116,12 +127,12 @@ app.get("/download/audio", async (req, res) => {
     "Content-Disposition",
     `attachment; filename="${info.videoDetails.title}_${quality}.mp3"`
   );
-  res.header("Content-Type", "audio/mp3");
+  res.header("Content-Type", "audio/mpeg");
 
   ytdl(url, { quality, format: "mp3" }).pipe(res);
 });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 // Start the server
 app.listen(port, () => {
   console.log("Server is running");

@@ -1,52 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Download YouTube Video/Audio</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Download</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="js/main.js" defer></script>
 </head>
 
 <body>
-  <main>
-  <section id="container">
-    <h2>Download Video</h2>
-    <div class="flex">
-      <% if (videoFormats.length === 0) { %>
-      <p class="no-formats">No formats available</p>
-      <% } else { %>
-      <% videoFormats.forEach(format => { %>
-      <div class="flex-item">
-        <a href="/download/video?url=<%= url %>&quality=<%= format.itag %>">
-          <h4 class="header"><%= format.qualityLabel %></h4>
-          <p class="text"><%= format.contentLength ? (format.contentLength / 1048576).toFixed(2) + ' MB' : '' %></p>
-        </a>
-      </div>
-      <% }) %>
-      <% } %>
-    </div>
-  </section>
+  <header>
+    <a href="/"><img src="img/logo.png" alt="logo" class="head-img" />
+      <span class="head-title">YT Mate</span>
+    </a>
+  </header>
   <hr>
-  <section id="container">
-    <h2>Download Audio</h2>
-    <div class="flex">
-      <% if (audioFormats.length === 0) { %>
-      <p class="no-formats">No formats available</p>
-      <% } else { %>
-      <% audioFormats.forEach(format => { %>
-      <div class="flex-item">
-        <a href="/download/audio?url=<%= url %>&quality=<%= format.itag %>">
-          <h4 class="header"><%= format.audioBitrate %></h4>
-          <p class="text"><%= format.contentLength ? (format.contentLength / 1048576).toFixed(2) + ' MB' : '' %></p>
-        </a>
+  <main>
+    <section id="yt-details">
+      <img id="thumb" src="<%= urlInfo.thumbnail.url %>" alt="Thumbnail" />
+      <h4 id="title"><%= urlInfo.title %></h4>
+      <p id="channel">Channel: <span><%= urlInfo.channel %></span></p>
+      <p id="duration">Duration: <span><%= urlInfo.duration %> Seconds</span></p>
+    </section>
+    <hr>
+    <section id="video-formats">
+      <h3 class="heading">Download Video (.mp4)</h3>
+      <div class="flex">
+        <% if (!videoFormats.length) { %>
+        <p class="no-formats">No formats available</p>
+        <% } else { %>
+        <% videoFormats.forEach(format => { %>
+        <div class="flex-item">
+          <a href="/download/video?url=<%= url %>&quality=<%= format.itag %>">
+            <h4><%= format.qualityLabel %></h4>
+            <p><%= format.contentLength ? (format.contentLength + urlIn/ 1048576).toFixed(2) + ' MB' : '' %></p>
+          </a>
+        </div>
+        <% }) %>
+        <% } %>
       </div>
-      <% }) %>
-      <% } %>
-    </div>
-  </section>
- </main>
+    </section>
+    <hr>
+    <section id="audio-formats">
+      <h3 class="heading">Download Audio(.mp3)</h3>
+      <div class="flex">
+        <% if (!audioFormats.length) { %>
+        <p class="no-formats">No formats available</p>
+        <% } else { %>
+        <% audioFormats.forEach(format => { %>
+        <div class="flex-item">
+          <a href="/download/audio?url=<%= url %>&quality=<%= format.itag %>">
+            <h4><%= format.audioBitrate %>kbps</h4>
+            <p><%= format.contentLength ? (format.contentLength / 1048576).toFixed(2) + ' MB' : '' %></p>
+          </a>
+        </div>
+        <% }) %>
+        <% } %>
+      </div>
+    </section>
+  </main>
+  <hr>
+  <footer>
+    <p>Made with love</p>
+  </footer>
 </body>
 
 </html>

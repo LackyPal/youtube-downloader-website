@@ -1,21 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Downloader</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>YT Mate</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
+  <header>
+    <a href="/"><img src="img/logo.png" alt="logo" class="head-img" />
+      <span class="head-title">YT Mate</span>
+    </a>
+  </header>
+  <hr>
   <main>
-    <h1 class="heading">YouTube Downloader</h1>
-    <% if (error) { %>
+    <section id="search-area">
+      <h2>Download Video and Audio from YouTube</h2>
+      <% if (error) { %>
       <p class="error-message"><%= error %></p>
-    <% } %>
-    <form action="/download" method="get">
-      <input type="text" name="url" placeholder="Enter YouTube URL" required>
-      <button type="submit">Download</button>
-    </form>
+      <% } %>
+      <form action="/download" method="get">
+        <input type="text" name="url" placeholder="Enter YouTube URL..." required>
+        <button type="submit">Download</button>
+      </form>
+    </section>
+    <hr>
+    <div id="site-description">
+      <p>YT Mate allows you to convert & download video from YouTube to MP3, MP4 in HD quality.YT Mate supports downloading videos in multiple quality such as: 1080p, 720p, 480p, 360p, 240p, 144p etc.You can easily download unlimited of videos from YouTube for free.</p>
+    </div>
+    <hr>
+    <section id="instructions">
+      <h3 class="heading">Instructions</h3>
+      <ol class="instruct-list">
+        <li class="instruct-items">Search by directly pasting the link of video, you want to download.</li>
+        <li class="instruct-items">Click "Download" button to begin the converting process.</li>
+        <li class="instruct-items">Select the video/audio format you want to downicad.</li>
+        <li class="instruct-items">It'll start download automatically.</li>
+        <li class="instruct-items">Check your download folder, you'll find the file.</li>
+      </ol>
+    </section>
+    <hr>
+    <section id="features">
+      <h3 class="heading">Features</h3>
+      <div id="feat-list">
+        <div class="feat">
+          <h5>Free download</h5>
+          <p>Unlimited downloads and always free.</p>
+        </div>
+        <div class="feat">
+          <h5>No credentials</h5>
+          <p>Registration (email/mobile number) is not required.</p>
+        </div>
+        <div class="feat">
+          <h5>Various Format</h5>
+          <p>Support downloading in multiple formats.</p>
+        </div>
+        <div class="feat">
+          <h5>Easy download</h5>
+          <p>Fully compatible with all browsers and easy to use.</p>
+        </div>
+      </div>
+    </section>
   </main>
+  <hr>
+  <footer>
+    <p>Made with love</p>
+  </footer>
 </body>
+
 </html>

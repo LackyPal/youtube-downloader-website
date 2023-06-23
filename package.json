@@ -13,7 +13,9 @@
     "youtube-downloader-website",
     "youtube-dl",
     "youtube-audio",
-    "music-website"
+    "music-website",
+    "y2mate",
+    "ytmate"
   ],
   "author": "L0SER8228",
   "dependencies": {

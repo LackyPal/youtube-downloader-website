@@ -1,0 +1,121 @@
+header {
+  text-align: center;
+  background-color: whitesmoke;
+}
+
+header>a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.head-img {
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+}
+
+.head-title {
+  font-size: 2em;
+  font-weight: bolder;
+}
+
+#search-area {
+  text-align: center;
+  margin: auto;
+  padding: 10px;
+}
+
+#search-area input[type="text"] {
+  padding: 10px;
+  border: 1px solid dodgerblue;
+  border-radius: 10px;
+}
+
+#search-area button[type="submit"] {
+  padding: 10px;
+  margin-left: 10px;
+  background-color: dodgerblue;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 20px;
+}
+
+#site-description {
+  text-wrap: balance;
+  text-align: center;
+}
+
+.heading {
+  text-align: center;
+}
+
+#instructions .instruct-items {
+  margin: 3px;
+  text-wrap: balance;
+}
+
+#feat-list {
+  text-align: center;
+}
+
+#feat-list .feat {
+  border-radius: 30px;
+  border: 1px dashed black;
+  padding: 5px;
+  margin: 7px;
+  text-wrap: balance;
+}
+
+footer {
+  text-align: center;
+  font-size: small;
+  background-color: whitesmoke;
+}
+
+#yt-details #thumb {
+  width: 100%;
+  height: auto;
+}
+
+#yt-details #title {
+  text-wrap: balance;
+}
+
+.flex {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.flex-item {
+  border: 2px solid;
+  border-radius: 20px;
+  padding: 5px;
+  margin: auto;
+  margin-bottom: 20px;
+  width: 7em;
+  height: 5em;
+  text-align: center;
+}
+
+.flex-item>a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.flex-item:hover {
+  background-color: floralwhite;
+  border-color: indianred;
+  cursor: pointer;
+}
+
+.no-formats {
+  text-align: center;
+  margin-top: 20px;
+}
